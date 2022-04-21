@@ -42,16 +42,7 @@ if uploaded_file is not None:
      df_results = pd.DataFrame({'Departure':list_departure,'Arrival':list_arrival,'Distance (km)':list_distances})
      st.write(df_results)
 
-     @st.cache
-     def convert_df(df):
-        # IMPORTANT: Cache the conversion to prevent computation on every rerun
-        return df.to_csv().encode('utf-8')
-
-     csv = convert_df(df_results)
-
-     st.download_button(
-        label="Download results as CSV",
-        data=csv,
-        file_name='airport_distance_scrap_results.csv',
-        mime='text/csv',
-     )
+     file_name='airport_distance_scrap_results.csv'
+     data = df_results.to_csv(index=False).encode('utf-8')
+     st.header("Results:")
+     st.download_button(label='📥 Download results', data=data, file_name=file_name)
